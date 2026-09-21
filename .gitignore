@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.env
+*.log
+
+# Base de datos local del backend
+backend/data/
+*.db
+*.db-shm
+*.db-wal

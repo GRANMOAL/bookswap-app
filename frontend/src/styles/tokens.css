@@ -1,0 +1,74 @@
+/* Tokens visuales de BookSwap — sección 14 de la documentación técnica.
+   Estética de fichas de biblioteca y papel envejecido ("dar una segunda
+   vida a los libros"). No se inventa una paleta nueva: se implementa
+   exactamente la definida en el documento. */
+
+:root {
+  /* 14.1 Paleta de colores */
+  --bs-fondo-app: #20362a;
+  --bs-fondo-oscuro: #16261c;
+  --bs-papel: #eee7d3;
+  --bs-borde-papel: #dbcda0;
+  --bs-tinta: #241f14;
+  --bs-texto-secundario: #726a56;
+  --bs-acento: #c68a2d;
+  --bs-sello: #a13d2c;
+  --bs-exito: #3b6d11;
+
+  /* Derivados de contraste (mismos tonos, para estados hover/disabled) */
+  --bs-acento-hover: #b07a25;
+  --bs-borde-input: #c9b98a;
+  --bs-sombra: rgba(22, 38, 28, 0.28);
+
+  /* 14.2 Tipografía */
+  --bs-fuente-titulos: "Fraunces", Georgia, serif;
+  --bs-fuente-cuerpo: "Inter", system-ui, sans-serif;
+  --bs-fuente-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bs-fondo-app);
+  color: var(--bs-papel);
+  font-family: var(--bs-fuente-cuerpo);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 14.3 Principios de accesibilidad (NF2) */
+a,
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--bs-acento);
+  outline-offset: 2px;
+}
+
+button {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

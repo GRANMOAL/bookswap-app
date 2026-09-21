@@ -1,0 +1,22 @@
+{
+  "name": "bookswap-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "API REST de BookSwap (Node.js + Express + SQLite integrado) — implementa el contrato de endpoints del Anexo B.1 y el modelo de datos de la sección 11 de la documentación técnica.",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "seed": "node src/db/seed.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}

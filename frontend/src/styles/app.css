@@ -1,0 +1,695 @@
+@import "./tokens.css";
+
+/* ---------- Contenedor general: simula el marco de un dispositivo móvil
+   en pantallas anchas (web), y ocupa el ancho completo en pantallas
+   angostas (NF5 — pensado para Android/iOS vía Capacitor). ---------- */
+
+.app-fondo {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: var(--bs-fondo-oscuro);
+}
+
+.app-shell {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  background: var(--bs-fondo-app);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 0 60px var(--bs-sombra);
+}
+
+.pantalla {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 20px 96px;
+}
+
+.pantalla--sin-nav {
+  padding-bottom: 20px;
+}
+
+/* ---------- Tipografía general ---------- */
+
+h1, h2, h3 {
+  font-family: var(--bs-fuente-titulos);
+  /* Hereda el color de su contenedor en vez de fijar uno: papel (claro)
+     sobre el fondo oscuro de la app, pero tinta (oscuro) dentro de
+     tarjetas/modales claros como .ficha o .modal — así el título nunca
+     se mezcla con el fondo donde se coloque. */
+  color: inherit;
+  margin: 0 0 6px;
+}
+
+h1 { font-size: 1.7rem; font-weight: 600; }
+h2 { font-size: 1.25rem; font-weight: 600; }
+h3 { font-size: 1.05rem; font-weight: 600; }
+
+p { line-height: 1.5; }
+
+.texto-secundario {
+  /* Hereda el color del contenedor (tinta sobre .ficha/.modal, papel sobre
+     el fondo oscuro de la app) y solo reduce su opacidad — así nunca se
+     mezcla con el fondo, sea cual sea. */
+  color: inherit;
+  opacity: 0.65;
+  font-size: 0.9rem;
+}
+
+.folio {
+  font-family: var(--bs-fuente-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  /* Igual que .texto-secundario: hereda el color de su contenedor y solo
+     baja la opacidad, para leerse bien tanto en tarjetas claras (.ficha)
+     como sobre el fondo oscuro de la app. */
+  color: inherit;
+  opacity: 0.75;
+}
+
+/* ---------- Barra superior ---------- */
+
+.barra-superior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.campana {
+  position: relative;
+  background: transparent;
+  border: none;
+  color: var(--bs-papel);
+  padding: 6px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.campana:hover {
+  background: rgba(238, 231, 211, 0.08);
+}
+
+.campana__contador {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: var(--bs-sello);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 17px;
+  height: 17px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+/* ---------- Botones ---------- */
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: var(--bs-fuente-cuerpo);
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+  width: 100%;
+}
+
+.boton--primario {
+  background: var(--bs-acento);
+  color: #1a1305;
+}
+.boton--primario:hover:not(:disabled) {
+  background: var(--bs-acento-hover);
+}
+
+.boton--secundario {
+  background: transparent;
+  color: var(--bs-papel);
+  border: 1px solid var(--bs-borde-input);
+}
+.boton--secundario:hover:not(:disabled) {
+  background: rgba(238, 231, 211, 0.08);
+}
+
+/* Dentro de un modal (fondo claro, .modal usa --bs-papel) el botón
+   secundario transparente heredaría texto claro sobre fondo claro.
+   Se corrige con texto oscuro para mantener buen contraste. */
+.modal .boton--secundario {
+  color: var(--bs-tinta);
+  border-color: var(--bs-borde-input);
+}
+.modal .boton--secundario:hover:not(:disabled) {
+  background: rgba(36, 31, 20, 0.06);
+}
+
+.boton--peligro {
+  background: var(--bs-sello);
+  color: #fff;
+}
+
+.boton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.boton--pequeno {
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  width: auto;
+}
+
+/* ---------- Formularios ---------- */
+
+.campo {
+  margin-bottom: 16px;
+}
+
+.campo label {
+  display: block;
+  font-size: 0.85rem;
+  color: rgba(238, 231, 211, 0.8);
+  margin-bottom: 6px;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  background: var(--bs-papel);
+  color: var(--bs-tinta);
+  border: 1px solid var(--bs-borde-input);
+  border-radius: 8px;
+  padding: 11px 12px;
+  font-size: 0.95rem;
+}
+
+.campo textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.selector-colores {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.selector-colores__pastilla {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.selector-colores__pastilla[data-activo="true"] {
+  border-color: var(--bs-papel);
+}
+
+.error-formulario {
+  background: rgba(161, 61, 44, 0.18);
+  border: 1px solid var(--bs-sello);
+  color: #ffd9d0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.88rem;
+  margin-bottom: 16px;
+}
+
+/* ---------- Tarjeta de libro (componente Ficha) ---------- */
+
+.ficha {
+  background: var(--bs-papel);
+  color: var(--bs-tinta);
+  border: 1px dashed var(--bs-borde-papel);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: transform 0.12s ease;
+}
+
+.ficha:hover {
+  transform: translateY(-1px);
+}
+
+.ficha__portada {
+  width: 44px;
+  height: 60px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.ficha__cuerpo {
+  flex: 1;
+  min-width: 0;
+}
+
+.ficha__titulo {
+  font-family: var(--bs-fuente-titulos);
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0 0 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ficha__autor {
+  font-size: 0.85rem;
+  color: var(--bs-texto-secundario);
+  margin: 0 0 8px;
+}
+
+.ficha__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.etiqueta {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--bs-sello);
+}
+
+.etiqueta--exito {
+  background: var(--bs-exito);
+}
+
+/* ---------- Listas / grupos ---------- */
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---------- Estado vacío (NF7) ---------- */
+
+.estado-vacio {
+  text-align: center;
+  padding: 48px 16px;
+  color: rgba(238, 231, 211, 0.6);
+}
+
+.estado-vacio__icono {
+  margin-bottom: 12px;
+  opacity: 0.7;
+}
+
+/* ---------- Barra de navegación inferior ---------- */
+
+.barra-navegacion {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  background: var(--bs-fondo-oscuro);
+  border-top: 1px solid rgba(238, 231, 211, 0.08);
+}
+
+.barra-navegacion__item {
+  flex: 1;
+  background: none;
+  border: none;
+  color: rgba(238, 231, 211, 0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px 12px;
+  font-size: 0.72rem;
+  font-family: var(--bs-fuente-cuerpo);
+}
+
+.barra-navegacion__item[data-activo="true"] {
+  color: var(--bs-acento);
+}
+
+/* ---------- Detalle de ficha ---------- */
+
+.detalle-portada {
+  width: 100%;
+  height: 160px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 16px;
+}
+
+.detalle-lista-interesados {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detalle-lista-interesados li {
+  font-size: 0.9rem;
+  color: rgba(238, 231, 211, 0.85);
+}
+
+/* ---------- Modal de calificación ---------- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 16, 12, 0.6);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 20;
+}
+
+.modal {
+  width: 100%;
+  max-width: 430px;
+  background: var(--bs-papel);
+  color: var(--bs-tinta);
+  border-radius: 20px 20px 0 0;
+  padding: 24px 20px 28px;
+}
+
+.estrellas {
+  display: flex;
+  gap: 6px;
+  font-size: 1.9rem;
+  margin: 10px 0 18px;
+}
+
+.estrellas button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--bs-borde-input);
+  line-height: 1;
+}
+
+.estrellas button[data-activa="true"] {
+  color: var(--bs-acento);
+}
+
+/* ---------- Toasts ---------- */
+
+.toast {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bs-tinta);
+  color: var(--bs-papel);
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  z-index: 30;
+  max-width: calc(100% - 40px);
+  text-align: center;
+}
+
+/* ---------- Auth ---------- */
+
+.auth-logo {
+  font-family: var(--bs-fuente-titulos);
+  font-size: 2.1rem;
+  font-weight: 600;
+  margin: 40px 0 6px;
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.auth-tabs button {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--bs-borde-input);
+  color: var(--bs-papel);
+  border-radius: 999px;
+  padding: 8px;
+  font-size: 0.85rem;
+}
+
+.auth-tabs button[data-activo="true"] {
+  background: var(--bs-acento);
+  color: #1a1305;
+  border-color: var(--bs-acento);
+  font-weight: 600;
+}
+
+/* ---------- Perfil ---------- */
+
+.perfil-encabezado {
+  text-align: center;
+  padding: 12px 0 20px;
+}
+
+.perfil-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  background: var(--bs-acento);
+  color: #1a1305;
+  font-family: var(--bs-fuente-titulos);
+  font-size: 1.6rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+}
+
+.contadores {
+  display: flex;
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.contador {
+  flex: 1;
+  background: rgba(238, 231, 211, 0.08);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+}
+
+.contador__valor {
+  font-family: var(--bs-fuente-titulos);
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: block;
+}
+
+.contador__etiqueta {
+  font-size: 0.78rem;
+  color: rgba(238, 231, 211, 0.65);
+}
+
+.historial-item {
+  background: rgba(238, 231, 211, 0.08);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.historial-item__estrellas {
+  color: var(--bs-acento);
+  letter-spacing: 2px;
+  margin: 4px 0;
+}
+
+/* ---------- Utilidades de espaciado ---------- */
+
+.filtros {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.filtros select {
+  background: var(--bs-papel);
+  color: var(--bs-tinta);
+  border: 1px solid var(--bs-borde-input);
+  border-radius: 8px;
+  padding: 10px 8px;
+}
+
+.buscador {
+  flex: 1;
+  background: var(--bs-papel);
+  color: var(--bs-tinta);
+  border: 1px solid var(--bs-borde-input);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.pantalla-cargando {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: rgba(238, 231, 211, 0.6);
+}
+
+/* ---------- 🥚 Easter egg — un libro que se abre y revela los créditos
+   (código Konami) ---------- */
+
+@keyframes creditos-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes creditos-aparecer {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes creditos-chispa {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
+  50% { transform: translateY(-14px) rotate(15deg); opacity: 1; }
+}
+
+.creditos-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: radial-gradient(circle at 50% 35%, #2c4636 0%, #16261c 75%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  overflow: hidden;
+  animation: creditos-fade-in 0.35s ease both;
+  cursor: pointer;
+}
+
+.creditos-overlay__chispa {
+  position: absolute;
+  color: var(--bs-acento);
+  animation: creditos-chispa 3s ease-in-out infinite;
+  pointer-events: none;
+}
+.creditos-overlay__chispa--1 { top: 20%; left: 22%; animation-delay: 0.2s; }
+.creditos-overlay__chispa--2 { bottom: 18%; right: 20%; animation-delay: 1s; }
+
+.creditos-overlay__cerrar {
+  position: relative;
+  z-index: 2;
+  width: auto;
+}
+
+/* El libro: dos capas del mismo tamaño superpuestas — "páginas" abajo,
+   siempre visibles, y "tapa" arriba, que gira sobre el lomo (izquierda)
+   como si se abriera un libro real. */
+
+.libro-secreto {
+  position: relative;
+  width: 240px;
+  height: 320px;
+  perspective: 1400px;
+  cursor: pointer;
+}
+
+.libro-secreto__paginas {
+  position: absolute;
+  inset: 0;
+  background: var(--bs-papel);
+  color: var(--bs-tinta);
+  border-radius: 4px 10px 10px 4px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45), inset 10px 0 14px -12px rgba(0, 0, 0, 0.35);
+  padding: 26px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.libro-secreto__huevo {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  color: var(--bs-texto-secundario);
+  opacity: 0;
+  animation: creditos-aparecer 0.4s ease 0.75s both;
+}
+
+.libro-secreto__titulo {
+  font-family: var(--bs-fuente-titulos);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--bs-sello);
+  margin: 0 0 16px;
+  opacity: 0;
+  animation: creditos-aparecer 0.4s ease 0.85s both;
+}
+
+.libro-secreto__linea {
+  font-size: 0.88rem;
+  margin: 0 0 8px;
+  opacity: 0;
+  animation: creditos-aparecer 0.45s ease both;
+}
+
+.libro-secreto__tapa {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  transform: rotateY(0deg);
+  transition: transform 1.1s cubic-bezier(0.65, 0, 0.35, 1);
+  background: linear-gradient(135deg, var(--bs-acento), var(--bs-sello) 130%);
+  border-radius: 4px 10px 10px 4px;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.5), inset -6px 0 12px rgba(0, 0, 0, 0.25);
+  color: var(--bs-papel);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  backface-visibility: hidden;
+}
+
+.libro-secreto__tapa span {
+  font-family: var(--bs-fuente-titulos);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.libro-secreto__tapa[data-abierto="true"] {
+  transform: rotateY(-155deg);
+}
